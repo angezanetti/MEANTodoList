@@ -4,18 +4,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="core.js"></script>
     <link rel="stylesheet" href="todo.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Todo List</title>
   </head>
   <body>
 	<div class="lines"></div>
     <div ng-controller="TodoListController as todoList">
       <ul class="list">
-		<li><a ng-click="todoList.addTodo()"><i class="fa fa-plus"></i></a></li>
+		<li><a ng-click="todoList.addTodo()"><img src="img/add.png"/></a></li>
         <li ng-repeat="todo in todoList.todos">
           <label class="checkbox">
 			<input type="checkbox" ng-click="toggleSelection($event, $index)" ng-model="todo.done">
-			<span class="done-{{todo.done}}" >{{todo.text}} <a ng-click="delete($index)"><i class="fa fa-trash"></i></a></span>
+			<span class="done-{{todo.done}}" >{{todo.text}} <a ng-click="delete($index)"><img class="trash" src="img/trash.png"></i></a></span>
           </label>
         </li>
       </ul>
