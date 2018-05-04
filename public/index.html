@@ -4,18 +4,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="core.js"></script>
     <link rel="stylesheet" href="todo.css">
+	<title>Todo List</title>
   </head>
   <body>
     <div ng-controller="TodoListController as todoList">
       <ul class="unstyled">
         <li ng-repeat="todo in todoList.todos">
           <label class="checkbox">
-            <input type="checkbox" ng-model="todo.done">
-            <span class="done-{{todo.done}}">{{todo.text}}</span>
+			<input type="checkbox" ng-click="toggleSelection($event, $index)" ng-model="todo.done">
+            <span class="done-{{todo.done}}" >{{todo.text}}</span>
           </label>
         </li>
       </ul>
       <form ng-submit="todoList.addTodo()">
+		        <input type="text" ng-model="todoList.todoText"  size="30"
+               placeholder="add new todo here">
         <input class="btn-primary" type="submit" value="add">
       </form>
     </div>

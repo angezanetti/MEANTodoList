@@ -42,7 +42,7 @@ app.post('/api/todos', function(req, res) {
   // create a todo, information comes from AJAX request from Angular
   Todo.create({
 	text : req.body.text,
-	done : false
+	done : req.body.done
   }, function(err, todo) {
 	if (err) res.send(err);
 	// get and return all the todos after you create another
@@ -53,6 +53,15 @@ app.post('/api/todos', function(req, res) {
 	});
   });
 
+});
+
+app.post('/api/todos/:todo_id', function(req, res) {
+  var query = {'_id':req.params.todo_id};
+  newState = { done: req.body.done};
+  Todo.findOneAndUpdate(query, newState, {upsert:true}, function(err, doc){
+    if (err) return res.status(500).send({ error: err });
+	return res.status(200).send("done")
+  });
 });
 
 app.delete('/api/todos/:todo_id', function(req, res) {
