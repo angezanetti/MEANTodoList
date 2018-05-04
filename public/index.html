@@ -8,9 +8,10 @@
 	<title>Todo List</title>
   </head>
   <body>
+	<div class="lines"></div>
     <div ng-controller="TodoListController as todoList">
-	  <a ng-click="todoList.addTodo()"><i class="fas fa-plus"></i></a>
-      <ul class="unstyled">
+      <ul class="list">
+		<li><a ng-click="todoList.addTodo()"><i class="fa fa-plus"></i></a></li>
         <li ng-repeat="todo in todoList.todos">
           <label class="checkbox">
 			<input type="checkbox" ng-click="toggleSelection($event, $index)" ng-model="todo.done">
