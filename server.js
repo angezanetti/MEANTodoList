@@ -1,15 +1,18 @@
-// set up ========================
 var express  = require('express');
-var app = express();
 var mongoose = require('mongoose');
+var app = express();
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
-// configuration =================
+// Database configuration =================
+var mongoDB = 'mongodb://xavier:12345@ds115350.mlab.com:15350/todolist'
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var app = require('./config/mongo');
-
+// App conf ===============================
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
