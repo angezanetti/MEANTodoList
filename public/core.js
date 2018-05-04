@@ -4,7 +4,6 @@ angular.module('todoApp', [])
 	  $http.get('/api/todos')
 		.then(function(data) {
 		  todoList.todos = data.data;
-		  console.log(todoList);
 		}, function (error) {
 		  console.log('Error: ' + data);
 		});
@@ -17,14 +16,14 @@ angular.module('todoApp', [])
 
 	$scope.toggleSelection = function toggleSelection(event, index) {
 	  todo_id = todoList.todos[index]._id;
-	  $http.post('/api/todos/' + todo_id, {done: event.target.checked})
+	  $http.post('/api/todos/' + todo_id, { done: event.target.checked})
 	};
 
-    todoList.archive = function() {
-      var oldTodos = todoList.todos;
-      todoList.todos = [];
-      angular.forEach(oldTodos, function(todo) {
-        if (!todo.done) todoList.todos.push(todo);
-      });
+    $scope.delete = function(index) {
+	  console.log('delete' + index);
+	  todo_id = todoList.todos[index]._id;
+	  $http.delete('/api/todos/' + todo_id);
+      todoList.todos = todoList.todos.slice(index);
+	  console.log(todoList.todos);
     };
   });
