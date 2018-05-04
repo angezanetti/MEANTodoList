@@ -1,27 +1,32 @@
-var Todo = angular.module('Todo', []);
-
-function mainController($scope, $http) {
-  $scope.formData = {};
-
-  // when landing on the page, get all todos and show them
-  $http.get('/api/todos')
-	.success(function(data) {
-	  $scope.todos = data;
-	  console.log(data);
-	})
-	.error(function(data) {
-	  console.log('Error: ' + data);
-	});
-
-  // when submitting the add form, send the text to the node API
-  $scope.createTodo = function() {
-	$http.post('/api/todos', $scope.formData)
-	  .success(function(data) {
-		$scope.formData = {}; // clear the form so our user is ready to enter another
-		$scope.todos = data;
-		console.log(data);
-	  })
-	  .error(function(data) {
-		console.log('Error: ' + data);
-	  });
-  };
+angular.module('todoApp', [])
+  .controller('TodoListController', function($http) {
+    var todoList = this;
+	  $http.get('/api/todos')
+		.then(function(data) {
+		  todoList.todos = data.data;
+		  console.log(todoList);
+		}, function (error) {
+		  console.log('Error: ' + data);
+		});
+ 
+    todoList.addTodo = function() {
+      todoList.todos.push({text:todoList.todoText, done:false});
+      todoList.todoText = '';
+    };
+ 
+    todoList.remaining = function() {
+      var count = 0;
+      angular.forEach(todoList.todos, function(todo) {
+        count += todo.done ? 0 : 1;
+      });
+      return count;
+    };
+ 
+    todoList.archive = function() {
+      var oldTodos = todoList.todos;
+      todoList.todos = [];
+      angular.forEach(oldTodos, function(todo) {
+        if (!todo.done) todoList.todos.push(todo);
+      });
+    };
+  });

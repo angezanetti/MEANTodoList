@@ -25,7 +25,8 @@ console.log("App listening on port 8080");
 
 // define model =================
 var Todo = mongoose.model('Todo', {
-	text : String
+	text : String,
+    done: Boolean
 });
 
 // routes ======================================================================
