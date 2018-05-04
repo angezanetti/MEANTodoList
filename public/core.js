@@ -24,6 +24,6 @@ angular.module('todoApp', [])
     $scope.delete = function(index) {
 	  todo_id = todoList.todos[index]._id;
 	  $http.delete('/api/todos/' + todo_id);
-      todoList.todos = todoList.todos.slice(index);
+      todoList.todos.splice(index, 1);
     };
   });
