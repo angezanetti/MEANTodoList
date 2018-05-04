@@ -2,3 +2,10 @@
   text-decoration: line-through;
   color: grey;
 }
+a.fa-trash:hover {
+  visibility: visible;
+}
+
+a.fa-trash {
+  visibility: hidden;
+}

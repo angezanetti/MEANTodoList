@@ -4,23 +4,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="core.js"></script>
     <link rel="stylesheet" href="todo.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Todo List</title>
   </head>
   <body>
     <div ng-controller="TodoListController as todoList">
+	  <a ng-click="todoList.addTodo()"><i class="fas fa-plus"></i></a>
       <ul class="unstyled">
         <li ng-repeat="todo in todoList.todos">
           <label class="checkbox">
 			<input type="checkbox" ng-click="toggleSelection($event, $index)" ng-model="todo.done">
-            <span class="done-{{todo.done}}" >{{todo.text}}</span>
+			<span class="done-{{todo.done}}" >{{todo.text}} <a ng-click="delete($index)"><i class="fa fa-trash"></i></a></span>
           </label>
         </li>
       </ul>
-      <form ng-submit="todoList.addTodo()">
-		        <input type="text" ng-model="todoList.todoText"  size="30"
-               placeholder="add new todo here">
-        <input class="btn-primary" type="submit" value="add">
-      </form>
     </div>
   </body>
 </html>
