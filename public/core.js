@@ -13,6 +13,7 @@ angular.module('todoApp', [])
 	  $http.post('/api/todos', {text:task, done:false})
       todoList.todos.push({text:task, done:false});
       todoList.todoText = '';
+	  $scope.hgt = { height: (todoList.todos.length * 30) + 'px' };
     };
 
 	// Change the state of a todo 
@@ -25,5 +26,16 @@ angular.module('todoApp', [])
 	  todo_id = todoList.todos[index]._id;
 	  $http.delete('/api/todos/' + todo_id);
       todoList.todos.splice(index, 1);
+	  $scope.hgt = { height: (todoList.todos.length * 30) + 'px' };
     };
+
+	$scope.hoverIn = function(){
+	  this.hoverEdit = true;
+	};
+
+	$scope.hoverOut = function(){
+	  this.hoverEdit = false;
+	};
+
+
   });
