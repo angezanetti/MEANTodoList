@@ -35,7 +35,4 @@ angular.module('todoApp', [])
 	$scope.hoverOut = function(){
 	  this.hoverEdit = false;
 	};
-
-
-
-  });
+});

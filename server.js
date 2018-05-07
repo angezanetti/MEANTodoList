@@ -33,7 +33,29 @@ var Todo = mongoose.model('Todo', {
 
 app.get('/api/todos', function(req, res) {
   Todo.find(function(err, todos) {
-	res.json(todos); // return all todos in JSON format
+	// If there is no task, we get fakes one from API
+	if (todos === undefined || todos.length ==0) {
+	  var request = require('request');
+	  request('https://jsonplaceholder.typicode.com/todos', function (error, response, body) {
+		// We only need 10 tasks
+		todos = JSON.parse(body).slice(0, 10);
+
+		for (var i = 0; i < todos.length; i++) {
+		  Todo.create({
+			text : todos[i].title,
+			done : todos[i].completed
+		  });
+		  todos[i].text = todos[i].title;
+		  todos[i].text = todos[i].title;
+		  delete todos[i].completed;
+		  delete todos[i].title;
+		  delete todos[i].userId;
+		  delete todos[i].id;
+		}
+		todos['data'] = todos;
+	  });
+	}
+	res.json(todos);
   });
 });
 
@@ -45,7 +67,6 @@ app.post('/api/todos', function(req, res) {
 	done : req.body.done
   }, function(err, todo) {
 	if (err) res.send(err);
-	// get and return all the todos after you create another
 	Todo.find(function(err, todos) {
 	  if (err)
 		res.send(err)
