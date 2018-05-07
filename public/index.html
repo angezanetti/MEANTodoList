@@ -7,11 +7,12 @@
 	<title>Todo List</title>
   </head>
   <body>
-	<div class="lines" ng-style="hgt"></div>
     <div ng-controller="TodoListController as todoList">
       <ul class="list">
-		<li><a ng-click="todoList.addTodo()"><img src="img/add.png"/></a></li>
+		<li><div class="lines"></div><a ng-click="todoList.addTodo()"><img class="plus" src="img/add.png"/></a></li>
+		  
         <li ng-repeat="todo in todoList.todos" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+		  <div class="lines"></div>
           <label class="checkbox">
 			<input type="checkbox" ng-click="toggleSelection($event, $index)" ng-model="todo.done">
 			<span class="done-{{todo.done}}">{{todo.text}} <a ng-click="delete($index)"><img class="trash"  ng-show="hoverEdit" src="img/trash.png"></i></a></span>

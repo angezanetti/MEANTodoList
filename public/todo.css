@@ -42,25 +42,22 @@ input[type="checkbox"]:checked {
   border-right: 1px solid #f2e3df;
   width: 2px;
   float: left;
-  height: 250px;
-  margin-left: 50px;
+  margin-left: 2em;
   position: absolute;
+  height:30px;
 }
 .done-true, .done-false {
-  padding-left: 10px;
+  padding-left: 1.5em;
 }
 .done-true {
   text-decoration: line-through;
   color: grey;
 }
-.trash:hover {
-  visibility: visible;
-}
-
 .trash {
   float: right;
   padding: 8px;
+  visibility: visible;
 }
-.fa-plus, .fa-trash {
-    opacity: 0.5;
+.plus {
+  padding-left: 3.5em;
 }
