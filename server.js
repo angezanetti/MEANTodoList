@@ -66,14 +66,9 @@ app.post('/api/todos', function(req, res) {
 	text : req.body.text,
 	done : req.body.done
   }, function(err, todo) {
-	if (err) res.send(err);
-	Todo.find(function(err, todos) {
-	  if (err)
-		res.send(err)
-	  res.json(todos);
-	});
+    if (err) return res.status(500).send({ error: err });
+	return res.status(200).send(todo)
   });
-
 });
 
 app.post('/api/todos/:todo_id', function(req, res) {

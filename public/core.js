@@ -5,14 +5,17 @@ angular.module('todoApp', [])
 		.then(function(data) {
 		  todoList.todos = data.data;
 		}, function (error) {
-		  console.log('Error: ' + data);
+		  console.log('Error: ' + error);
 		});
  
     todoList.addTodo = function() {
 	  var task = $window.prompt('Enter your new task');
 	  $http.post('/api/todos', {text:task, done:false})
-      todoList.todos.push({text:task, done:false});
-      todoList.todoText = '';
+		.then(function(data) {
+			todoList.todos.push({_id: data.data._id, text: data.data.text, done:false});
+		}, function (error) {
+		  console.log('Error: ' + JSON.stringify(error));
+		});
     };
 
 	// Change the state of a todo 
@@ -35,4 +38,4 @@ angular.module('todoApp', [])
 	$scope.hoverOut = function(){
 	  this.hoverEdit = false;
 	};
-});
+  });
