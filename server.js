@@ -25,8 +25,8 @@ console.log("App listening on port 8080");
 
 // define model =================
 var Todo = mongoose.model('Todo', {
-	text : String,
-    done: Boolean
+  text : String,
+  done: Boolean
 });
 
 // routes ======================================================================
@@ -40,6 +40,7 @@ app.get('/api/todos', function(req, res) {
 		// We only need 10 tasks
 		todos = JSON.parse(body).slice(0, 10);
 
+		// Convert the datas to the model format
 		for (var i = 0; i < todos.length; i++) {
 		  Todo.create({
 			text : todos[i].title,
@@ -47,6 +48,7 @@ app.get('/api/todos', function(req, res) {
 		  });
 		  todos[i].text = todos[i].title;
 		  todos[i].text = todos[i].title;
+		  // Clean the useless datas
 		  delete todos[i].completed;
 		  delete todos[i].title;
 		  delete todos[i].userId;
@@ -66,30 +68,32 @@ app.post('/api/todos', function(req, res) {
 	text : req.body.text,
 	done : req.body.done
   }, function(err, todo) {
-    if (err) return res.status(500).send({ error: err });
+	if (err) return res.status(500).send({ error: err });
 	return res.status(200).send(todo)
   });
 });
 
+// Update the state of a todo
 app.post('/api/todos/:todo_id', function(req, res) {
   var query = {'_id':req.params.todo_id};
   newState = { done: req.body.done};
   Todo.findOneAndUpdate(query, newState, {upsert:true}, function(err, doc){
-    if (err) return res.status(500).send({ error: err });
+	if (err) return res.status(500).send({ error: err });
 	return res.status(200).send("done")
   });
 });
 
+// Delete the todo 
 app.delete('/api/todos/:todo_id', function(req, res) {
   Todo.remove({
 	_id : req.params.todo_id
   }, function(err, doc) {
-    if (err) return res.status(500).send({ error: err });
+	if (err) return res.status(500).send({ error: err });
 	return res.status(200).send("done")
   });
 });
 
- // Angular application -------------------------------------------------------------
+// Angular application -------------------------------------------------------------
 app.get('*', function(req, res) {
   res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 });
